@@ -118,7 +118,10 @@ app.get("/callback", async function (req, res) {
     const response = await getMe();
     res.cookie("user", response.data);
     res.send("<script>window.close()</script>");
-  }
+    setTimeout(() => {
+      //todo refresh automatically
+    }, 1000);
+     }
 });
 
 app.listen(PORT, () => {

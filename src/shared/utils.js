@@ -23,3 +23,15 @@ export const getProcessedRange = (processedTime, trackDuration) => {
     100
   ).toFixed(2);
 };
+
+export const windowPopUp = (url) => {
+  let top = window.screen.height - 550;
+  top = top > 0 ? top / 2 : 0;
+  let left = window.screen.width - 450;
+  left = left > 0 ? left / 2 : 0;
+  window.open(
+    url,
+    "Spotify Web App",
+    "width=450,height=550" + ",top=" + top + ",left=" + left
+  );
+};
