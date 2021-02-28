@@ -1,5 +1,5 @@
 const initialState = {
-  windowIsOpen: false,
+  popupIsOpened: false,
   healthStatus: false,
   isLogin: false,
   entities: {
@@ -28,6 +28,13 @@ const Reducers = (state = initialState, action) => {
       return {
         ...state,
         isLogin: true,
+        popupIsOpened: false,
+      };
+    }
+    case "POPUP_WINDOW_OPEN": {
+      return {
+        ...state,
+        popupIsOpened: true,
       };
     }
     default:
