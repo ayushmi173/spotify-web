@@ -35,3 +35,7 @@ export const windowPopUp = (url) => {
     "width=450,height=550" + ",top=" + top + ",left=" + left
   );
 };
+
+export const skippedProcess = (trackDuration, skippedPercentage) => {
+  return Math.floor(trackDuration * skippedPercentage) / 100;
+};

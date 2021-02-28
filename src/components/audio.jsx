@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from 'styled-components';
-import { COLORS, SONG } from "../constant/constant";
+import { SONG } from "../constant/constant";
 import playButton from '../shared/images/play-button.svg';
 import rewind from '../shared/images/rewind.svg';
 import forward from '../shared/images/fast-forward.svg';
@@ -76,6 +76,7 @@ flex-direction:row;
 `;
 
 const Audio = () => {
+
   const audioRef = useRef();
   const [updatedTime, setUpdatedTime] = useState(0);
   const [trackDuration, setTrackDuration] = useState(0);
@@ -129,11 +130,15 @@ const Audio = () => {
     setUpdatedTime(e.currentTarget.currentTime)
   }
 
+  const handleUpdate = (value) => {
+    setUpdatedTime(value);
+    audioRef.current.currentTime = value;
+  }
 
   return (
     <>
       <Wrapper>
-        <ProgressBar processedTime={updatedTime} trackDuration={trackDuration} />
+        <ProgressBar processedTime={updatedTime} trackDuration={trackDuration} setUpdatedTime={(value) => handleUpdate(value)} />
         <audio
           ref={audioRef}
           src={SONG}
@@ -151,9 +156,6 @@ const Audio = () => {
           <IncreaseBtnWrapper onClick={handleIncrease}></IncreaseBtnWrapper>
         </TrackControlWrapper>
       </Wrapper>
-
-
-
     </>
   );
 }

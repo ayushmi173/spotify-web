@@ -40,13 +40,6 @@ const ArtistName = styled.span`
   color: ${COLORS.WHITE};
 `;
 
-const ReleaseDate = styled.span`
-  font-size: 14px;
-  font-weight: 600;
-  font-family: "sans-serif";
-  color: ${COLORS.WHITE};
-`;
-
 const TrackDetailsWrapper = styled.div`
   display: flex;
   flex-direction: row;

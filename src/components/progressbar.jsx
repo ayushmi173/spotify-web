@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../constant/constant';
-import { getProcessedRange } from '../shared/utils'
+import { getProcessedRange, skippedProcess } from '../shared/utils'
 
 const ProgressBarWrapper = styled.input`
 width:100%;
@@ -21,9 +21,14 @@ const ProgressBar = (props) => {
         }
     }, [processedTime, trackDuration])
 
+    const handleChange = (e) => {
+        const skippedPercentage = e.currentTarget.value;
+        props.setUpdatedTime(skippedProcess(trackDuration, skippedPercentage));
+    }
+
     return (
         <>
-            <ProgressBarWrapper ref={progressRef} type="range" min="0" max="100" defaultValue="0" step="0.01">
+            <ProgressBarWrapper ref={progressRef} type="range" min="0" max="100" defaultValue="0" step="0.01" onChange={e => handleChange(e)}>
             </ProgressBarWrapper>
         </>
     )
