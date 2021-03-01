@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { COLORS } from '../constant/constant';
 import { getProcessedRange, skippedProcess } from '../shared/utils'
 
 const ProgressBarWrapper = styled.input`
 width:100%;
 height:30px;
-background-color:${COLORS.PROGRESS};
 outline: none;
+cursor: progress;
 transition: opacity .2s;
 `;
 

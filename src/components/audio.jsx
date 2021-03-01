@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from 'styled-components';
 import { SONG } from "../constant/constant";
 import playButton from '../shared/images/play-button.svg';
+import pauseButton from '../shared/images/pause-button.svg';
 import rewind from '../shared/images/rewind.svg';
 import forward from '../shared/images/fast-forward.svg';
 import ProgressBar from "./progressbar"
@@ -19,12 +21,12 @@ margin-bottom:20px;
 
 const ConvertedTimeWrapper = styled.span`
 font-size:1em;
-font-weight:800px;
+font-weight:900;
 `;
 
 const LoadedTimeWrapper = styled.span`
 font-size:1em;
-font-weight:800px;
+font-weight:900;
 `;
 
 const ProcessedTimeWrapper = styled.span`
@@ -36,11 +38,12 @@ justify-content:space-between;
 const PlayButtonWrapper = styled.span`
 height:40px;
 width:50px;
-background-image:url('${playButton}');
+background-image:url('${(props) => props.playing ? pauseButton : playButton}');
 background-repeat:no-repeat;
 background-size: contain;
+cursor: pointer;
 &:hover{
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s linear;
   transform: translateY(-5px);
 }
 `;
@@ -51,8 +54,9 @@ width:50px;
 background-image:url('${forward}');
 background-repeat:no-repeat;
 background-size: contain;
+cursor: pointer;
 &:hover{
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s linear;
   transform: translateX(5px);
 }
 `;
@@ -63,8 +67,9 @@ width:50px;
 background-image:url('${rewind}');
 background-repeat:no-repeat;
 background-size: contain;
+cursor: pointer;
 &:hover{
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s linear;
   transform: translateX(-5px);
 }
 `;
@@ -73,16 +78,20 @@ const TrackControlWrapper = styled.span`
 display:flex;
 justify-content:space-around;
 flex-direction:row;
+padding-top:6px;
 `;
 
 const Audio = () => {
 
   const audioRef = useRef();
+  const dispatch = useDispatch();
   const [updatedTime, setUpdatedTime] = useState(0);
   const [trackDuration, setTrackDuration] = useState(0);
   const [loadedTime, setLoadedTime] = useState("");
   const [isPlaying, setIsPlaying] = useState(false);
   const [convertedTime, setConvertedTime] = useState("00:00");
+  const isSquarePlay = useSelector((state) => state.isSquareplay);
+  const musicId = useSelector(state => state.musicId);
 
   useEffect(() => {
     setIsPlaying(isPlaying);
@@ -101,13 +110,21 @@ const Audio = () => {
     setConvertedTime(convertedTime);
   }, [convertedTime]);
 
+  function play() {
+    audioRef.current.play();
+  }
+  function pause() {
+    audioRef.current.pause();
+  }
+
   const handlePlay = () => {
     if (isPlaying) {
-      audioRef.current.pause();
+      pause();
       setIsPlaying(false);
     }
     else if (!isPlaying) {
-      audioRef.current.play();
+      play();
+      dispatch({ type: "SET_SQUARE_PLAY", isSongSquareClicked: false, musicId: "" });
       setIsPlaying(true)
     }
   }
@@ -130,29 +147,42 @@ const Audio = () => {
     setUpdatedTime(e.currentTarget.currentTime)
   }
 
-  const handleUpdate = (value) => {
-    setUpdatedTime(value);
-    audioRef.current.currentTime = value;
+  const handleUpdate = (updatedValue) => {
+    setUpdatedTime(updatedValue);
+    audioRef.current.currentTime = updatedValue;
   }
+
+  useEffect(() => {
+    if (isSquarePlay) {
+      play();
+      setIsPlaying(true);
+      audioRef.current.currentTime = 0;
+      setUpdatedTime(0);
+    }
+  }, [isSquarePlay, musicId]);
 
   return (
     <>
       <Wrapper>
-        <ProgressBar processedTime={updatedTime} trackDuration={trackDuration} setUpdatedTime={(value) => handleUpdate(value)} />
+        <ProgressBar
+          processedTime={updatedTime}
+          trackDuration={trackDuration}
+          setUpdatedTime={(updatedValue) => handleUpdate(updatedValue)} />
+
         <audio
           ref={audioRef}
           src={SONG}
           onTimeUpdate={e => handleTimeUpdate(e)}
           onLoadedData={e => handleLoadedDuration(e)}
-        >
-        </audio>
+        />
+
         <ProcessedTimeWrapper>
-          <ConvertedTimeWrapper>{convertedTime}</ConvertedTimeWrapper>
-          <LoadedTimeWrapper>{loadedTime}</LoadedTimeWrapper>
+          <ConvertedTimeWrapper>{isSquarePlay ? convertedTime : <></>}</ConvertedTimeWrapper>
+          <LoadedTimeWrapper>{isSquarePlay ? loadedTime : <></>}</LoadedTimeWrapper>
         </ProcessedTimeWrapper>
         <TrackControlWrapper>
           <DescreaseBtnWrapper onClick={handleDecrease}></DescreaseBtnWrapper>
-          <PlayButtonWrapper onClick={handlePlay}></PlayButtonWrapper>
+          <PlayButtonWrapper playing={isPlaying} onClick={handlePlay}></PlayButtonWrapper>
           <IncreaseBtnWrapper onClick={handleIncrease}></IncreaseBtnWrapper>
         </TrackControlWrapper>
       </Wrapper>

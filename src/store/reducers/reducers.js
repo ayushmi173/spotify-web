@@ -2,9 +2,12 @@ const initialState = {
   popupIsOpened: false,
   healthStatus: false,
   isLogin: false,
+  isSquareplay: false,
+  musicId: "",
   entities: {
     releases: [],
   },
+  error: "",
 };
 
 const Reducers = (state = initialState, action) => {
@@ -35,6 +38,19 @@ const Reducers = (state = initialState, action) => {
       return {
         ...state,
         popupIsOpened: true,
+      };
+    }
+    case "SET_SQUARE_PLAY": {
+      return {
+        ...state,
+        isSquareplay: action.isSongSquareClicked,
+        musicId: action.musicId,
+      };
+    }
+    case "API_ERROR": {
+      return {
+        ...state,
+        error: action.message,
       };
     }
     default:
