@@ -20,6 +20,7 @@ const ReleaseList = () => {
     const trackReleases = useSelector(state => state.entities.releases);
     const isLogin = useSelector(state => state.isLogin);
     const user = Cookies.get("user");
+    const trackUrl = useSelector(state => state.trackUrl);
 
     useEffect(() => {
         if (isLogin || user) {
@@ -30,7 +31,7 @@ const ReleaseList = () => {
     return <>
         <GlobalStyle />
         <Header />
-        <Audio />
+        <Audio trackUrl={trackUrl} />
         <SongWrapper>
             {Object.values(trackReleases).map((item) => {
                 if (item.images[1]) {

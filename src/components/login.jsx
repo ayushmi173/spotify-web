@@ -87,7 +87,7 @@ const Login = () => {
   if (popupIsOpened) {
     setTimeout(() => {
       window.location.reload();
-    }, 17000);
+    }, 18000);
   }
 
   return (

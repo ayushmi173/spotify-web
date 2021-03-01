@@ -1,8 +1,23 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { COLORS } from "../constant/constant";
 import { useDispatch } from 'react-redux';
 import { v1 as uuidv1 } from 'uuid';
+import { SONGS } from '../constant/constant'
+
+const shake = keyframes`
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+`;
 
 const SongSquareWrapper = styled.span`
   display: inline-block;
@@ -10,8 +25,9 @@ const SongSquareWrapper = styled.span`
   height: 300px;
   width: 200px;
   &:hover{
-    opacity:0.7;
+    opacity:0.8;
     cursor: pointer;
+    animation: ${shake} 3s linear infinite;
   }
  `;
 
@@ -52,8 +68,9 @@ const TrackDetailsWrapper = styled.div`
 const SongSquare = ({ title, imageUrl, artistName }) => {
   const uuId = uuidv1();
   const dispatch = useDispatch();
+
   const handleSongSquare = () => {
-    dispatch({ type: "SET_SQUARE_PLAY", isSongSquareClicked: true, musicId: uuId })
+    dispatch({ type: "SET_SQUARE_PLAY", isSongSquareClicked: true, musicId: uuId, trackUrl: SONGS[Math.floor(Math.random() * 21)] })
   }
 
   return (
