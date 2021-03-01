@@ -9,6 +9,7 @@ height:30px;
 background-color:${COLORS.PROGRESS};
 outline: none;
 transition: opacity .2s;
+cursor: progress;
 `;
 
 const ProgressBar = (props) => {

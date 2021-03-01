@@ -1,7 +1,9 @@
 const initialState = {
   popupIsOpened: false,
-  healthStatus: false,
   isLogin: false,
+  healthStatus: false,
+  isSquareplay: false,
+  musicId: "",
   entities: {
     releases: [],
   },
@@ -35,6 +37,13 @@ const Reducers = (state = initialState, action) => {
       return {
         ...state,
         popupIsOpened: true,
+      };
+    }
+    case "SET_SQUARE_PLAY": {
+      return {
+        ...state,
+        isSquareplay: action.isSongSquareClicked,
+        musicId: action.musicId,
       };
     }
     default:

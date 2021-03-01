@@ -1,14 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { COLORS } from "../constant/constant";
+import { useDispatch } from 'react-redux';
 
 const SongSquareWrapper = styled.span`
   display: inline-block;
   margin: 20px;
   height: 300px;
   width: 200px;
-  &:hover{
+   &:hover{
     opacity:0.7;
+    cursor: pointer;
   }
  `;
 
@@ -25,7 +27,7 @@ const ContainerWrapper = styled.div`
 const TrackTitle = styled.div`
   display: flex;
   justify-content: center;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   font-family: "sans-serif";
   text-align: center;
@@ -37,7 +39,7 @@ const ArtistName = styled.span`
   font-size: 14px;
   font-weight: 600;
   font-family: "sans-serif";
-  color: ${COLORS.WHITE};
+  color: ${COLORS.BACKGROUND};
 `;
 
 const TrackDetailsWrapper = styled.div`
@@ -46,10 +48,17 @@ const TrackDetailsWrapper = styled.div`
   justify-content: space-evenly;
 `;
 
-const SongSquare = ({ title, imageUrl, artistName }) => {
+const SongSquare = ({ musicId, title, imageUrl, artistName }) => {
+  const dispatch = useDispatch();
+  const handleSongSquare = () => {
+    dispatch({ type: "SET_SQUARE_PLAY", isSongSquareClicked: true, musicId: musicId })
+  }
+
   return (
     <>
-      <SongSquareWrapper>
+      {  console.log("Caalll")}
+      <SongSquareWrapper key={musicId} onClick={handleSongSquare}></SongSquareWrapper>
+      <SongSquareWrapper >
         <ContainerWrapper background={imageUrl}></ContainerWrapper>
         <TrackTitle>{title}</TrackTitle>
         <TrackDetailsWrapper>

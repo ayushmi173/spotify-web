@@ -29,11 +29,12 @@ export const windowPopUp = (url) => {
   top = top > 0 ? top / 2 : 0;
   let left = window.screen.width - 450;
   left = left > 0 ? left / 2 : 0;
-  window.open(
+  const isOpen = window.open(
     url,
     "Spotify Web App",
     "width=450,height=550" + ",top=" + top + ",left=" + left
   );
+  return isOpen;
 };
 
 export const skippedProcess = (trackDuration, skippedPercentage) => {

@@ -6,6 +6,7 @@ import Header from './header';
 import { useDispatch, useSelector } from 'react-redux';
 import GlobalStyle from '../globalCss';
 import Audio from './audio';
+import { v1 as uuidv1 } from 'uuid';
 import { StickyContainer, Sticky } from 'react-sticky';
 
 const SongWrapper = styled.div`
@@ -30,15 +31,24 @@ const ReleaseList = () => {
         <Header />
         <Audio />
         <SongWrapper>
-            {Object.values(trackReleases).map((item, index) => {
-                return (
-                    <SongSquare key={index} title={item.name}
-                        artistName={item.artists[0].name} imageUrl={item.images[1].url}
-                        releaseDate={item.release_date} />
-                )
+            {Object.values(trackReleases).map((item) => {
+                const musicId = uuidv1();
+                const x = item.images;
+                if (x.length > 0) {
+                    console.log("call")
+                    return (
+                        <SongSquare key={musicId} musicId={musicId} title={item.name}
+                            artistName={item.artists[0].name} imageUrl={item.images[1].url}
+                        />
+                    )
+                }
+                else {
+                    return
+                }
             })}
         </SongWrapper>
 
     </>;
 };
 export default ReleaseList;
+

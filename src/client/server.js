@@ -116,12 +116,11 @@ app.get("/callback", async function (req, res) {
   res.cookie("refresh-token", refresh_token);
   if (tokens) {
     const response = await getMe();
-    res.cookie("user", response.data);
+    if (response.data) {
+      res.cookie("user", response.data);
+    }
     res.send("<script>window.close()</script>");
-    setTimeout(() => {
-      //todo refresh automatically
-    }, 1000);
-     }
+  }
 });
 
 app.listen(PORT, () => {
