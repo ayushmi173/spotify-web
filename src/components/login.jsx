@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import Logo from "../shared/images/Spotify_Icon.png";
 import { COLORS } from "../constant/constant";
 import { windowPopUp } from "../shared/utils";
+import CookieConsent from "react-cookie-consent";
 
 const LoginButtonLogo = styled.span`
   display: flex;
@@ -70,6 +71,12 @@ const Login = () => {
   const history = useHistory();
   const user = Cookies.get("user");
 
+  useEffect(() => {
+    if (isLogin && user) {
+      history.push("/releases")
+    }
+  }, [isLogin])
+
   async function handleLogin() {
     const loginLink = await api("/login");
     if (loginLink.data) {
@@ -78,16 +85,10 @@ const Login = () => {
     }
   }
 
-  useEffect(() => {
-    if (isLogin && user) {
-      history.push("/releases")
-    }
-  }, [isLogin])
-
   if (popupIsOpened) {
     setTimeout(() => {
       window.location.reload();
-    }, 18000);
+    }, 16000);
   }
 
   return (
@@ -104,7 +105,16 @@ const Login = () => {
         <LoginButtonLogo></LoginButtonLogo>
         <LoginButtonText>Login with Spotify</LoginButtonText>
       </LoginButtonWrapper>
-
+      <CookieConsent
+        location="bottom"
+        buttonText="Agree"
+        cookieName="userPermission"
+        style={{ background: "#2B373B", fontWeight: 800 }}
+        buttonStyle={{ color: "#000000", fontSize: "20px", marginRight: "50px", backgroundColor: "#ffffff", fontFamily: 'Sans-Serif', fontWeight: 500 }}
+        expires={150}
+      >
+        This website uses cookies to store user for maintaining the user experience.{" "}
+      </CookieConsent>
     </>
   );
 };

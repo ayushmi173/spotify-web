@@ -1,26 +1,19 @@
+require("dotenv").config();
 const axios = require("axios").default;
 const express = require("express");
 const app = express();
 const cors = require("cors");
-require("dotenv").config();
 const cookie = require("cookie-parser");
 
-// let CLIENT_ID = process.env.CLIENT_ID;
-// let CLIENT_SECRET = process.env.CLIENT_SECRET;
-// const REDIRECT_URI = process.env.REDIRECT_URI;
-// const SCOPES = process.env.SCOPES;
-// const PORT = process.env.PORT;
-// console.log("nnnnnnnnnnnnnnnn " + CLIENT_ID);
-// console.log();
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = process.env.REDIRECT_URI;
+const SCOPES = process.env.SCOPES;
+const PORT = process.env.PORT;
 
 app.use(cors());
 app.use(cookie());
 
-const CLIENT_ID = "1a5d0e8aa1f94f1291fd968154e6569b";
-const CLIENT_SECRET = "de2a61c1ffe8477189766b63f5159f78";
-const REDIRECT_URI = "http://localhost:5000/callback";
-const SCOPES = encodeURIComponent("user-read-private user-read-email");
-const PORT = 5000;
 let access_token = "";
 let refresh_token = "";
 
@@ -118,7 +111,6 @@ app.get("/callback", async function (req, res) {
     const response = await getMe();
     if (response.data) {
       res.cookie("user", response.data);
-      console.log(response.data.items);
     }
     res.send("<script>window.close()</script>");
   }

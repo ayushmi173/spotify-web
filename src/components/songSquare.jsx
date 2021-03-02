@@ -2,8 +2,6 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { COLORS } from "../constant/constant";
 import { useDispatch } from 'react-redux';
-import { v1 as uuidv1 } from 'uuid';
-import { SONGS } from '../constant/constant'
 
 const shake = keyframes`
   0% { transform: translate(1px, 1px) rotate(0deg); }
@@ -65,14 +63,11 @@ const TrackDetailsWrapper = styled.div`
   justify-content: space-evenly;
 `;
 
-const SongSquare = ({ title, imageUrl, artistName }) => {
-  const uuId = uuidv1();
+const SongSquare = ({ title, imageUrl, artistName, url, generatedMusicId }) => {
   const dispatch = useDispatch();
-
   const handleSongSquare = () => {
-    dispatch({ type: "SET_SQUARE_PLAY", isSongSquareClicked: true, musicId: uuId, trackUrl: SONGS[Math.floor(Math.random() * 21)] })
+    dispatch({ type: "SET_SQUARE_PLAY", isSongSquareClicked: true, musicId: generatedMusicId, trackUrl: url, trackTitle: title })
   }
-
   return (
     <>
       <SongSquareWrapper>

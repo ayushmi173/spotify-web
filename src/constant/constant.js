@@ -19,6 +19,26 @@ import Q from "../shared/tracks/17.mp3";
 import R from "../shared/tracks/18.mp3";
 import S from "../shared/tracks/19.mp3";
 import T from "../shared/tracks/20.mp3";
+import AB from "../shared/tracks/21.mp3";
+import V from "../shared/tracks/22.mp3";
+import W from "../shared/tracks/23.mp3";
+import X from "../shared/tracks/24.mp3";
+import Y from "../shared/tracks/25.mp3";
+import Z from "../shared/tracks/26.mp3";
+import AA from "../shared/tracks/27.mp3";
+import AC from "../shared/tracks/28.mp3";
+import AD from "../shared/tracks/29.mp3";
+import AE from "../shared/tracks/30.mp3";
+import AF from "../shared/tracks/31.mp3";
+import AG from "../shared/tracks/32.mp3";
+import AH from "../shared/tracks/33.mp3";
+import AI from "../shared/tracks/34.mp3";
+import AJ from "../shared/tracks/35.mp3";
+import AK from "../shared/tracks/36.mp3";
+import AL from "../shared/tracks/37.mp3";
+import AM from "../shared/tracks/38.mp3";
+import AN from "../shared/tracks/39.mp3";
+import AO from "../shared/tracks/40.mp3";
 
 export const COLORS = {
   BACKGROUND: "#bdbdbd",
@@ -49,4 +69,24 @@ export const SONGS = [
   S,
   T,
   U,
+  V,
+  W,
+  X,
+  Y,
+  Z,
+  AA,
+  AB,
+  AC,
+  AD,
+  AE,
+  AF,
+  AG,
+  AH,
+  AI,
+  AJ,
+  AK,
+  AL,
+  AM,
+  AN,
+  AO,
 ];

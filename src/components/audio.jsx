@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from 'styled-components';
 import playButton from '../shared/images/play-button.svg';
 import pauseButton from '../shared/images/pause-button.svg';
@@ -7,6 +7,7 @@ import rewind from '../shared/images/rewind.svg';
 import forward from '../shared/images/fast-forward.svg';
 import ProgressBar from "./progressbar"
 import { convertSecondsIntoHMS } from '../shared/utils'
+import { COLORS } from "../constant/constant";
 
 const Wrapper = styled.div`
 display:flex;
@@ -75,16 +76,24 @@ cursor: pointer;
 
 const TrackControlWrapper = styled.span`
 display:flex;
-justify-content:space-around;
+justify-content:center;
 flex-direction:row;
-padding-top:6px;
+margin-top:-10px;
+`;
+
+const TrackTitleWrapper = styled.span`
+  display: flex;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: "sans-serif";
+  text-align: center;
+  color: ${COLORS.WHITE};
 `;
 
 const Audio = (props) => {
 
   const audioRef = useRef();
-  const dispatch = useDispatch();
-  
   const [updatedTime, setUpdatedTime] = useState(0);
   const [trackDuration, setTrackDuration] = useState(0);
   const [loadedTime, setLoadedTime] = useState("");
@@ -92,6 +101,7 @@ const Audio = (props) => {
   const [convertedTime, setConvertedTime] = useState("00:00");
   const isSquarePlay = useSelector((state) => state.isSquareplay);
   const musicId = useSelector(state => state.musicId);
+  const trackTitle = useSelector(state => state.trackTitle);
 
   useEffect(() => {
     setIsPlaying(isPlaying);
@@ -160,7 +170,7 @@ const Audio = (props) => {
     audioRef.current.currentTime = updatedValue;
   }
 
-   return (
+  return (
     <>
       <Wrapper>
         <audio
@@ -169,6 +179,9 @@ const Audio = (props) => {
           onTimeUpdate={e => handleTimeUpdate(e)}
           onLoadedData={e => handleLoadedDuration(e)}
         />
+        {isSquarePlay ? (
+          <TrackTitleWrapper>{trackTitle}</TrackTitleWrapper>
+        ) : <></>}
         {isSquarePlay ?
           (<ProgressBar
             processedTime={updatedTime}

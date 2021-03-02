@@ -5,6 +5,7 @@ const initialState = {
   isSquareplay: false,
   musicId: "",
   trackUrl: "",
+  trackTitle: "",
   entities: {
     releases: [],
   },
@@ -47,6 +48,7 @@ const Reducers = (state = initialState, action) => {
         isSquareplay: action.isSongSquareClicked,
         musicId: action.musicId,
         trackUrl: action.trackUrl,
+        trackTitle: action.trackTitle,
       };
     }
     case "API_ERROR": {

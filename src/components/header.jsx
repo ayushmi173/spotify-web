@@ -22,6 +22,7 @@ const ImageWrapper = styled.div`
   flex-direction: row;
   justify-items: center;
   margin: auto;
+  margin-bottom:-20px;
   max-width: 200px;
   height: 180px;
   background-size: contain;
