@@ -1,10 +1,15 @@
 const initialState = {
-  windowIsOpen: false,
+  popupIsOpened: false,
   healthStatus: false,
   isLogin: false,
+  isSquareplay: false,
+  musicId: "",
+  trackUrl: "",
+  trackTitle: "",
   entities: {
     releases: [],
   },
+  error: "",
 };
 
 const Reducers = (state = initialState, action) => {
@@ -28,6 +33,28 @@ const Reducers = (state = initialState, action) => {
       return {
         ...state,
         isLogin: true,
+        popupIsOpened: false,
+      };
+    }
+    case "POPUP_WINDOW_OPEN": {
+      return {
+        ...state,
+        popupIsOpened: true,
+      };
+    }
+    case "SET_SQUARE_PLAY": {
+      return {
+        ...state,
+        isSquareplay: action.isSongSquareClicked,
+        musicId: action.musicId,
+        trackUrl: action.trackUrl,
+        trackTitle: action.trackTitle,
+      };
+    }
+    case "API_ERROR": {
+      return {
+        ...state,
+        error: action.message,
       };
     }
     default:
